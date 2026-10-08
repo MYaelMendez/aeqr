@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "aeqr"
+version = "0.1.0"
+description = "æQR — resource addressing, verification, and audit for the æ constellation"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Yæl Méndez"}]
+dependencies = [
+    "qrcode>=7.4",
+    "pillow>=9",
+    "numpy>=1.21",
+    "opencv-python>=4.5",
+    "pyzbar>=0.1.9",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7"]
+
+[project.scripts]
+aeqr = "ae.cli:main"
+
+[tool.setuptools]
+packages = ["ae"]

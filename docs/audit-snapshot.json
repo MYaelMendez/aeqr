@@ -1,0 +1,188 @@
+{
+  "revision": "d2d3bc5387a6fc94640455746110f0064d352b21",
+  "measured_at": "2026-10-08",
+  "html_documents": 181,
+  "inline_scripts_parsed": 261,
+  "findings": [
+    {
+      "id": "p1-aipodcast_me/discover.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/discover.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\":{\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/frame_01_opening.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/frame_01_opening.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:1\n{\"imports\":{\"three\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js\",\"three/addons/\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/\"}}\n          ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/frame_02_build.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/frame_02_build.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:1\n{\"imports\":{\"three\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js\",\"three/addons/\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/\"}}\n          ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/frame_03_peak.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/frame_03_peak.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:1\n{\"imports\":{\"three\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js\",\"three/addons/\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/\"}}\n          ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/frame_04_fall.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/frame_04_fall.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:1\n{\"imports\":{\"three\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js\",\"three/addons/\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/\"}}\n          ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/frame_05_resolve.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/frame_05_resolve.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:1\n{\"imports\":{\"three\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js\",\"three/addons/\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/\"}}\n          ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/markets.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/markets.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\":{\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/monaco-editor.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/monaco-editor.html",
+      "reason": "SyntaxError: Unexpected identifier 'float'",
+      "evidence": "<tmp>\\s.js:135\n  uniform float uTime;\n          ^^^^^\n\nSyntaxError: Unexpected identifier 'float'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/storyboard.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/storyboard.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:1\n{\"imports\":{\"three\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js\",\"three/addons/\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/\"}}\n          ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/storyboard.html-1",
+      "severity": "P1",
+      "path": "aipodcast_me/storyboard.html",
+      "reason": "SyntaxError: More than one default clause in switch statement",
+      "evidence": "<tmp>\\s.mjs:21\n  switch(o.type){case'sphere':geo=new THREE.SphereGeometry(args);break;case'box':geo=new THREE.BoxGeometry(1.5,1.5,1.5);break;case'torus':geo=new THREE.TorusGeometry(1,0.4,16,100);break;case'torusknot':default:geo=new THREE.TorusKnotGeometry(1,0.3,128,32);break;case'icosahedron':geo=new THREE.IcosahedronGeometry(1,0);break;case'octahedron':geo=new THREE.OctahedronGeometry(1,0);break",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/storyboard_animation.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/storyboard_animation.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:1\n{\"imports\":{\"three\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/build/three.module.js\",\"three/addons/\":\"https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/\"}}\n          ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/storyboard_animation.html-1",
+      "severity": "P1",
+      "path": "aipodcast_me/storyboard_animation.html",
+      "reason": "SyntaxError: Unexpected token '{'",
+      "evidence": "<tmp>\\s.mjs:15\nvar keyframes=[{{time:0.0,pos:[8.0,5,10]}},\n                ^\n\nSyntaxError: Unexpected token '{'\n    at checkSyntax (node:internal/main/check_syntax:72:5)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-aipodcast_me/vault-layers.html-0",
+      "severity": "P1",
+      "path": "aipodcast_me/vault-layers.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\": {\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-capability-mesh.html-0",
+      "severity": "P1",
+      "path": "capability-mesh.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\": {\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-command-map.html-0",
+      "severity": "P1",
+      "path": "command-map.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\": {\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-constellation.html-0",
+      "severity": "P1",
+      "path": "constellation.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\": {\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-keeper.html-0",
+      "severity": "P1",
+      "path": "keeper.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\":{\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-mech-app-example.html-1",
+      "severity": "P1",
+      "path": "mech-app-example.html",
+      "reason": "SyntaxError: Private field '#territory' must be declared in an enclosing class",
+      "evidence": "<tmp>\\s.js:1\n\n\nSyntaxError: Private field '#territory' must be declared in an enclosing class\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-privateclient/vault-layers.html-0",
+      "severity": "P1",
+      "path": "privateclient/vault-layers.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\": {\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-sovereign-state.html-1",
+      "severity": "P1",
+      "path": "sovereign-state.html",
+      "reason": "SyntaxError: missing ) after argument list",
+      "evidence": "<tmp>\\s.js:111\n    out.appendChild(card(`<div class=\"vp\"><b style=\"color:var(--gold)\">${vp.name}</b>${b}</div>${kv('url',`<a href=\"${vp.url}\">${vp.url}</a>`)}<br>${kv('branch',vp.branch||'—')}<br>${(vp.assets||[]).map(a=>'▸ '+a).join('<br>')}<br><span style=\"color:var(--gold-dim)\">${vp.note||''}</span>` CanvasFocus));\n                                                                                ",
+      "verified": false
+    },
+    {
+      "id": "p1-vault-layers.html-0",
+      "severity": "P1",
+      "path": "vault-layers.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\": {\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    },
+    {
+      "id": "p1-zeitgeist-4d.html-0",
+      "severity": "P1",
+      "path": "zeitgeist-4d.html",
+      "reason": "SyntaxError: Unexpected token ':'",
+      "evidence": "<tmp>\\s.js:3\n  \"imports\":{\n           ^\n\nSyntaxError: Unexpected token ':'\n    at wrapSafe (node:internal/modules/cjs/loader:1866:18)\n    at checkSyntax (node:internal/main/check_syntax:76:3)\n\nNode.js v26.7.0",
+      "verified": false
+    }
+  ],
+  "scope": [
+    "Fresh inline-script syntax parse only. NOT checked: full HTTP audit, 28 historical targets, PR #3, browser execution, visual QA, camera scan, dependency closure, backend execution."
+  ],
+  "sha256": "d8c65bb77f45d0181064b8332b86f445203e40cbc790f5b71271de15d6ad9d6a"
+}
