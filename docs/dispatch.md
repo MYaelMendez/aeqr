@@ -32,11 +32,34 @@ with real workers, sealing the result as an æQR receipt.
 - the whole run is a single hash-chained **seal**, itself scannable as an
   `ae:1:manifest:` envelope
 
+## The GPU engine (the .mec's claim, made true)
+
+`qr_index.mec` declares "RTX-accelerated SHA-256 batch for chain verification".
+CuPy has no hashlib, so `ae/gpu_batch.py` implements SHA-256 as a **CUDA kernel**
+(`cupy.RawKernel`): CPU pads each message, the GPU runs the compression function
+one thread per message, and every result is checked against hashlib
+(`selftest` -> 64/64 match). The `:Verify` join hashes the whole batch in **one
+kernel launch** when a GPU is present, and falls back to CPU hashlib otherwise.
+The receipt records which engine ran (`engine: cuda|cpu`) — and the **seal is
+identical** either way, because the engine is an implementation detail, not part
+of the contract.
+
+Verified on this host: `NVIDIA GeForce RTX 3050 6GB` (cupy 14.2.0),
+`engine=cuda trials=64 match=True`.
+
+## Units from the real inventory
+
+`units_from_registry()` builds units from the 269-resource registry (the
+gh-pages inventory) — each unit is an address + its expected hash, exactly what
+`:Verify` checks. `--registry` sources the run from real routes, not synthetic
+ones.
+
 ## Use
 
 ```bash
 python -m ae.dispatch C:/æ/hermes-fork/mech/qr_index.mec
 aeqr dispatch C:/æ/hermes-fork/mech/qr_index.mec --units 8 --workers 8
+aeqr dispatch C:/æ/hermes-fork/mech/qr_index.mec --registry --units 24 --workers 8 --gpu on
 ```
 
 Exit code is `0` when sealed, `1` when any unit was refused.

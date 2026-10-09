@@ -54,6 +54,9 @@ def main(argv: list[str] | None = None) -> int:
     d.add_argument("spec")
     d.add_argument("--units", type=int, default=8)
     d.add_argument("--workers", type=int, default=8)
+    d.add_argument("--registry", action="store_true",
+                   help="source units from the 269-resource registry (real inventory)")
+    d.add_argument("--gpu", choices=["auto", "on", "off"], default="auto")
 
     args = ap.parse_args(argv)
 
@@ -103,8 +106,12 @@ def main(argv: list[str] | None = None) -> int:
         return 0 if allowed else 1
 
     if args.cmd == "dispatch":
-        units = disp.demo_units(args.units)
-        rec = disp.fleet_dispatch(args.spec, units, workers=args.workers)
+        if args.registry:
+            units = disp.units_from_registry(limit=args.units)
+        else:
+            units = disp.demo_units(args.units)
+        gpu = None if args.gpu == "auto" else (args.gpu == "on")
+        rec = disp.fleet_dispatch(args.spec, units, workers=args.workers, gpu=gpu)
         _p(rec.to_dict())
         return 0 if rec.sealed else 1
 

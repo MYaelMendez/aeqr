@@ -23,6 +23,7 @@ from dataclasses import dataclass, asdict
 
 from . import envelope
 from . import mech
+from . import gpu_batch
 
 GENESIS = "0" * 64
 
@@ -73,13 +74,14 @@ class DispatchReceipt:
     results: list
     parallel: bool
     refused: int = 0
+    engine: str = "cpu"
 
     def to_dict(self) -> dict:
         return {
             "spec": self.spec, "spec_sha256": self.spec_sha256,
             "stages": self.stages, "units": self.units, "workers": self.workers,
             "sealed": self.sealed, "seal": self.seal, "refused": self.refused,
-            "parallel": self.parallel,
+            "parallel": self.parallel, "engine": self.engine,
             "results": [r.to_dict() for r in self.results],
         }
 
@@ -88,7 +90,8 @@ class DispatchReceipt:
         return envelope.encode("manifest", self.to_dict())
 
 
-def _run_unit(unit: dict, spec: mech.MechSpec, scan_delay: float = 0.0) -> UnitResult:
+def _run_unit(unit: dict, spec: mech.MechSpec, scan_delay: float = 0.0,
+              precomputed: dict | None = None) -> UnitResult:
     uid = unit["unit_id"]
     started = time.monotonic()
     worker = threading.current_thread().name
@@ -110,7 +113,11 @@ def _run_unit(unit: dict, spec: mech.MechSpec, scan_delay: float = 0.0) -> UnitR
     try:
         kind, decoded = envelope.decode(payload)
         canonical = json.dumps(decoded, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
-        spec_hash = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
+        # the hash comes from the batch engine when available (GPU), else CPU
+        if precomputed is not None and uid in precomputed:
+            spec_hash = precomputed[uid]
+        else:
+            spec_hash = hashlib.sha256(canonical.encode("utf-8")).hexdigest()
         add("Decode", True, f"{kind} {spec_hash[:12]}")
     except Exception as exc:
         add("Decode", False, str(exc)[:80])
@@ -134,13 +141,34 @@ def _run_unit(unit: dict, spec: mech.MechSpec, scan_delay: float = 0.0) -> UnitR
     return UnitResult(uid, True, stages, artifact, chain, worker, started, time.monotonic())
 
 
+def _canonical(payload: str) -> bytes:
+    _, dec = envelope.decode(payload)
+    return json.dumps(dec, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+
+
 def fleet_dispatch(spec_path, units: list, workers: int = 8,
-                   scan_delay: float = 0.0) -> DispatchReceipt:
+                   scan_delay: float = 0.0, gpu: bool | None = None) -> DispatchReceipt:
     spec = mech.parse_spec(spec_path)
     n = len(units)
+
+    # the .mec declares "RTX-accelerated SHA-256 batch": do it, in ONE kernel launch.
+    engine = "cpu"
+    precomputed: dict = {}
+    if gpu is None:
+        gpu = gpu_batch.available()[0]
+    if gpu and units:
+        blobs = []
+        for u in units:
+            try:
+                blobs.append(_canonical(u.get("payload", "")))
+            except Exception:
+                blobs.append(b"")
+        digests, engine = gpu_batch.sha256_batch(blobs)
+        precomputed = {u["unit_id"]: d for u, d in zip(units, digests)}
+
     w = max(1, min(workers, n)) if n else 1
     with ThreadPoolExecutor(max_workers=w) as ex:
-        results = list(ex.map(lambda u: _run_unit(u, spec, scan_delay), units))
+        results = list(ex.map(lambda u: _run_unit(u, spec, scan_delay, precomputed), units))
 
     sealed = all(r.ok for r in results)
     joined = "|".join(sorted(r.chain for r in results))
@@ -152,8 +180,25 @@ def fleet_dispatch(spec_path, units: list, workers: int = 8,
     return DispatchReceipt(
         spec=spec.name, spec_sha256=spec.sha256, stages=spec.stages,
         units=n, workers=w, sealed=sealed, seal=seal, results=results,
-        parallel=parallel, refused=sum(1 for r in results if not r.ok),
+        parallel=parallel, refused=sum(1 for r in results if not r.ok), engine=engine,
     )
+
+
+def units_from_registry(limit: int | None = None) -> list:
+    """Build real æQR units from the 269-resource registry (the gh-pages inventory).
+
+    Each unit is an address + its expected hash — exactly what :Verify checks."""
+    from . import registry as reg
+    rs = reg.resources()
+    if limit:
+        rs = rs[:limit]
+    units = []
+    for i, r in enumerate(rs):
+        payload = envelope.encode("manifest", {"surfaces": [r.route], "artifact": r.route, "id": r.id})
+        chain = hashlib.sha256(_canonical(payload)).hexdigest()
+        units.append({"unit_id": i, "payload": payload, "chain": chain,
+                      "artifact": r.route, "id": r.id})
+    return units
 
 
 def demo_units(n: int = 8, root: str = "surface") -> list:
@@ -174,7 +219,7 @@ if __name__ == "__main__":
     rec = fleet_dispatch(spec, demo_units(8), workers=8, scan_delay=0.02)
     print(f"spec      {rec.spec}  ({rec.spec_sha256[:12]})")
     print(f"stages    {' -> '.join(rec.stages)}")
-    print(f"units     {rec.units}   workers {rec.workers}   parallel {rec.parallel}")
+    print(f"units     {rec.units}   workers {rec.workers}   parallel {rec.parallel}   engine {rec.engine}")
     print(f"refused   {rec.refused}")
     print(f"sealed    {rec.sealed}   seal {rec.seal[:24]}")
     print(f"receipt   {rec.envelope()[:72]}...")
