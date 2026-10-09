@@ -42,8 +42,10 @@ def main(argv: list[str] | None = None) -> int:
     o = sub.add_parser("orchard")
     os_ = o.add_subparsers(dest="osub")
     oa = os_.add_parser("audit"); oa.add_argument("root"); oa.add_argument("--node", default="node")
+    oa.add_argument("--gpu", choices=["auto", "on", "off"], default="auto")
     oc = os_.add_parser("compare"); oc.add_argument("prev"); oc.add_argument("cur")
     oq = os_.add_parser("queue"); oq.add_argument("root"); oq.add_argument("--node", default="node")
+    oq.add_argument("--gpu", choices=["auto", "on", "off"], default="auto")
 
     a = sub.add_parser("authority")
     a.add_argument("action", choices=list(auth.ACTIONS))
@@ -83,7 +85,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.cmd == "orchard":
         if args.osub == "audit":
-            snap = orch.audit_inline_scripts(args.root, node=args.node)
+            gpu = None if args.gpu == "auto" else (args.gpu == "on")
+            snap = orch.audit_inline_scripts(args.root, node=args.node, gpu=gpu)
             _p(snap.to_dict())
             return 1 if snap.blockers else 0
         if args.osub == "compare":
@@ -91,7 +94,8 @@ def main(argv: list[str] | None = None) -> int:
             cur = json.loads(Path(args.cur).read_text(encoding="utf-8"))
             _p(orch.compare(prev, cur)); return 0
         if args.osub == "queue":
-            snap = orch.audit_inline_scripts(args.root, node=args.node)
+            gpu = None if args.gpu == "auto" else (args.gpu == "on")
+            snap = orch.audit_inline_scripts(args.root, node=args.node, gpu=gpu)
             _p(orch.to_kanban(snap)); return 0
         o.print_help(); return 2
 

@@ -16,6 +16,7 @@ from dataclasses import dataclass, asdict, field
 from pathlib import Path
 
 from . import registry as _reg
+from . import gpu_batch
 
 
 @dataclass
@@ -39,6 +40,7 @@ class Snapshot:
     inline_scripts_parsed: int
     findings: list[Finding] = field(default_factory=list)
     scope: list[str] = field(default_factory=list)  # what was NOT checked
+    engine: str = "cpu"  # which hash engine produced this snapshot
 
     @property
     def blockers(self) -> list[Finding]:
@@ -79,17 +81,36 @@ def _inline_scripts(html: str) -> list[tuple[str, str]]:
     return out
 
 
-def audit_inline_scripts(root: str | Path, node: str = "node") -> Snapshot:
+def audit_inline_scripts(root: str | Path, node: str = "node",
+                          gpu: bool | None = None) -> Snapshot:
     """Parse every inline <script> in every HTML doc; report syntax failures.
 
     Deterministic: same tree -> same findings. External scripts and JSON data
     scripts are excluded (they are not JavaScript we can parse here).
+
+    When `gpu` is True (or None and a GPU is available), every HTML file's
+    content is hashed in ONE CUDA kernel launch — the same batch SHA-256 the
+    :Verify join uses. The snapshot records which engine ran.
     """
     root = Path(root)
     pages = sorted(p for p in root.rglob("*.html")
                    if not any(x in p.parts for x in (".git", "node_modules", "vendor")))
     findings: list[Finding] = []
     parsed = 0
+
+    # ── GPU batch: hash every HTML file in one kernel launch ──
+    engine = "cpu"
+    if gpu is None:
+        gpu = gpu_batch.available()[0]
+    if gpu and pages:
+        blobs = []
+        for p in pages:
+            try:
+                blobs.append(p.read_bytes())
+            except OSError:
+                blobs.append(b"")
+        _, engine = gpu_batch.sha256_batch(blobs)
+
     with tempfile.TemporaryDirectory() as tmp:
         for page in pages:
             try:
@@ -119,7 +140,8 @@ def audit_inline_scripts(root: str | Path, node: str = "node") -> Snapshot:
                         evidence=err[:400]))
     return Snapshot(
         revision="(unknown)", measured_at="(unknown)",
-        html_documents=len(pages), inline_scripts_parsed=parsed, findings=findings)
+        html_documents=len(pages), inline_scripts_parsed=parsed, findings=findings,
+        engine=engine)
 
 
 def compare(previous: dict, current: dict) -> dict:
