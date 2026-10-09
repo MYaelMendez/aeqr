@@ -18,6 +18,7 @@ from . import __version__
 from . import registry as reg
 from . import authority as auth
 from . import orchard as orch
+from . import dispatch as disp
 
 
 def _p(obj) -> None:
@@ -48,6 +49,11 @@ def main(argv: list[str] | None = None) -> int:
     a.add_argument("action", choices=list(auth.ACTIONS))
     a.add_argument("--id", dest="rid", default=None)
     a.add_argument("--grant", default=None, help="'action:scope' capability to test with")
+
+    d = sub.add_parser("dispatch")
+    d.add_argument("spec")
+    d.add_argument("--units", type=int, default=8)
+    d.add_argument("--workers", type=int, default=8)
 
     args = ap.parse_args(argv)
 
@@ -95,6 +101,12 @@ def main(argv: list[str] | None = None) -> int:
         _p({"action": args.action, "resource": args.rid, "allowed": allowed,
             "requires_authority": auth.requires_authority(args.action)})
         return 0 if allowed else 1
+
+    if args.cmd == "dispatch":
+        units = disp.demo_units(args.units)
+        rec = disp.fleet_dispatch(args.spec, units, workers=args.workers)
+        _p(rec.to_dict())
+        return 0 if rec.sealed else 1
 
     ap.print_help()
     return 2
