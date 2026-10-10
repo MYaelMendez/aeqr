@@ -64,20 +64,27 @@ class Snapshot:
 # ── a real, deterministic inline-script syntax audit ──────────────────────────
 
 _SCRIPT_RE = re.compile(r"<script\b([^>]*)>(.*?)</script>", re.S | re.I)
-_SKIP_TYPES = ("application/ld+json", "application/json", "text/template")
+# Only these script types are JavaScript we can hand to `node --check`. Everything
+# else — importmap, ld+json, application/json, text/mech, text/typescript,
+# text/template, speculationrules, … — is DATA or a display template, and parsing
+# it as JS yields phantom "Unexpected token" blockers. The old code used a
+# skip-list, which meant every new non-JS type became a fresh false P1 (whack-a-
+# mole: importmap alone produced ~30 phantom blockers). An allow-list ends it.
+_JS_TYPES = ("", "module", "text/javascript", "application/javascript",
+             "text/ecmascript", "application/ecmascript")
 
 
 def _inline_scripts(html: str) -> list[tuple[str, str]]:
-    """Return [(type, body)] for inline scripts only (no src=)."""
+    """Return [(type, body)] for inline scripts that are actually JavaScript."""
     out = []
     for attrs, body in _SCRIPT_RE.findall(html):
         if "src=" in attrs.lower():
             continue
         m = re.search(r'type\s*=\s*["\']([^"\']+)["\']', attrs, re.I)
         stype = (m.group(1).strip().lower() if m else "")
-        if stype in _SKIP_TYPES:
+        if stype not in _JS_TYPES:
             continue
-        out.append((stype, body))
+        out.append(("module" if stype == "module" else "js", body))
     return out
 
 

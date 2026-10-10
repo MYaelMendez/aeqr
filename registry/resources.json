@@ -1,6 +1,6 @@
 {
   "version": "0.1.0",
-  "generated": "2026-10-08",
+  "generated": "2026-10-10",
   "base_url": "https://myaelmendez.github.io",
   "resources": [
     {
@@ -2959,6 +2959,94 @@
       "scope": "local",
       "route": "ae://local/kænbæn/verification-gates.json",
       "type": "kanban",
+      "verified": false,
+      "evidence": null
+    },
+    {
+      "id": "local-folders-mp4-factory",
+      "name": "mp4-factory/",
+      "path": "mp4-factory/",
+      "category": "local_folders",
+      "scope": "local",
+      "route": "ae://local/mp4-factory/",
+      "type": "folder",
+      "verified": false,
+      "evidence": null
+    },
+    {
+      "id": "local-folders-pc-vision",
+      "name": "pc-vision/",
+      "path": "pc-vision/",
+      "category": "local_folders",
+      "scope": "local",
+      "route": "ae://local/pc-vision/",
+      "type": "folder",
+      "verified": false,
+      "evidence": null
+    },
+    {
+      "id": "local-folders-teologia",
+      "name": "teologia/",
+      "path": "teologia/",
+      "category": "local_folders",
+      "scope": "local",
+      "route": "ae://local/teologia/",
+      "type": "folder",
+      "verified": false,
+      "evidence": null
+    },
+    {
+      "id": "local-folders-threejs-curriculo",
+      "name": "threejs-curriculo/",
+      "path": "threejs-curriculo/",
+      "category": "local_folders",
+      "scope": "local",
+      "route": "ae://local/threejs-curriculo/",
+      "type": "folder",
+      "verified": false,
+      "evidence": null
+    },
+    {
+      "id": "local-folders-threejs-curriculum",
+      "name": "threejs-curriculum/",
+      "path": "threejs-curriculum/",
+      "category": "local_folders",
+      "scope": "local",
+      "route": "ae://local/threejs-curriculum/",
+      "type": "folder",
+      "verified": false,
+      "evidence": null
+    },
+    {
+      "id": "local-folders-vidæo",
+      "name": "vidæo/",
+      "path": "vidæo/",
+      "category": "local_folders",
+      "scope": "local",
+      "route": "ae://local/vidæo/",
+      "type": "folder",
+      "verified": false,
+      "evidence": null
+    },
+    {
+      "id": "local-folders-vision-supervision",
+      "name": "vision-supervision/",
+      "path": "vision-supervision/",
+      "category": "local_folders",
+      "scope": "local",
+      "route": "ae://local/vision-supervision/",
+      "type": "folder",
+      "verified": false,
+      "evidence": null
+    },
+    {
+      "id": "local-folders-mech_tmp",
+      "name": "mech_tmp/",
+      "path": "mech_tmp/",
+      "category": "local_folders",
+      "scope": "local",
+      "route": "ae://local/mech_tmp/",
+      "type": "folder",
       "verified": false,
       "evidence": null
     }

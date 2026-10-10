@@ -4,7 +4,7 @@ from ae import registry as r
 def test_registry_loads_and_validates():
     data = r.load()
     assert data["version"]
-    assert len(data["resources"]) == 269
+    assert len(data["resources"]) == 277
 
 
 def test_scopes_are_valid_and_ids_unique():
@@ -35,4 +35,4 @@ def test_by_category_and_resolve():
 
 
 def test_counts_total_matches():
-    assert sum(r.counts().values()) == 269
+    assert sum(r.counts().values()) == 277
