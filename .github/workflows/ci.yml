@@ -28,4 +28,4 @@ jobs:
       - name: Run the suite
         run: pytest -q
       - name: Prove the gate refuses the rune class
-        run: python -m ae.supervision selftest
+        run: python -X utf8 -m ae.supervision selftest
