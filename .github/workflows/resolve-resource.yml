@@ -1,0 +1,57 @@
+name: Resolve æQR resource
+
+on:
+  workflow_dispatch:
+    inputs:
+      resource_id:
+        description: "Stable registry resource ID (not a URL)"
+        required: true
+        default: "html-surfaces-teologia-index"
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  resolve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - name: Resolve from versioned registry
+        env:
+          RESOURCE_ID: ${{ inputs.resource_id }}
+          COMMIT_SHA: ${{ github.sha }}
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json, os, pathlib, re
+          rid = os.environ["RESOURCE_ID"]
+          if not re.fullmatch(r"[A-Za-z0-9_.-]{1,128}", rid):
+              raise SystemExit("Invalid resource ID; use 1-128 letters, digits, dots, underscores, or hyphens.")
+          data = json.loads(pathlib.Path("registry/resources.json").read_text(encoding="utf-8"))
+          entries = data if isinstance(data, list) else data.get("resources", [])
+          found = next((x for x in entries if x.get("id") == rid), None)
+          report = {"resource_id": rid, "found": found is not None, "commit": os.environ["COMMIT_SHA"]}
+          if found:
+              report.update({k: found.get(k) for k in ("name", "category", "scope", "type", "verified", "evidence")})
+              if found.get("scope") in ("public", "hybrid"):
+                  report["route"] = found.get("route")
+          pathlib.Path("resolution-report.json").write_text(json.dumps(report, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a", encoding="utf-8") as out:
+              out.write("## æQR · Resolution report / Informe de resolución\n\n")
+              out.write("A registry lookup is not an authorization or independent remote verification.\n\n")
+              out.write("| Field | Value |\n|---|---|\n")
+              for k, v in report.items():
+                  safe = str(v).replace("|", "\\|").replace("\n", " ")
+                  out.write(f"| {k} | {safe} |\n")
+          if not found:
+              raise SystemExit("Resource not found in versioned registry.")
+          PY
+      - name: Upload JSON report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: aeqr-resolution-report
+          path: resolution-report.json
+          if-no-files-found: ignore
