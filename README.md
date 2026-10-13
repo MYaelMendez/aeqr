@@ -46,9 +46,9 @@ which has cv2/numpy/qrcode/pyzbar.
 ## Use
 
 ```bash
-# the registry — 269 resources, 8 categories
+# the registry — 278 resources, 9 categories
 aeqr registry --category threejs_scenes
-aeqr resolve html-surfaces-teologia-index
+aeqr resolve html-surfaces-teologia-calendar
 
 # produce a QR only if it decodes back through two real decoders
 python -m ae.supervision produce secret '{"name":"K","blob":{"n":"a","ct":"b"}}' --out k.png
