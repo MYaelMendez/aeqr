@@ -31,7 +31,7 @@ Backward compatibility: `væult.py` still emits `VAEULT1:` payloads; decode()
 recognizes that legacy prefix and maps it to type "secret".
 
 Usage:
-    from qr_envelope import encode, decode, TYPES
+    
     text = encode("secret", {"name": "API_KEY", "blob": {...}})
     kind, payload = decode(text)          # -> ("secret", {...})
     text = encode("route", {"cmd": "væult:// status"})

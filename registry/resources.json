@@ -3049,6 +3049,83 @@
       "type": "folder",
       "verified": false,
       "evidence": null
+    },
+    {
+      "id": "html-surfaces-startabusiness",
+      "name": "startabusiness.html",
+      "path": "startabusiness.html",
+      "category": "html_surfaces",
+      "scope": "public",
+      "route": "https://myaelmendez.github.io/startabusiness.html",
+      "type": "page",
+      "verified": true,
+      "evidence": {
+        "check": "http 200 on the canonical route, sha256 of the SERVED bytes",
+        "url": "https://myaelmendez.github.io/startabusiness.html",
+        "sha256": "cb34001d75647faa00b6b1a936143cde53806085fe0e55185aaf2dfe54f5c1f1",
+        "note": "hash of the artifact as served, not the local working copy — git eol normalization means the CRLF checkout and the LF blob differ byte-for-byte while being the same content",
+        "at": "2026-10-10"
+      }
+    },
+    {
+      "id": "videos-teo-1-corpus",
+      "name": "teo-1-corpus-916.mp4",
+      "path": "teo-1-corpus-916.mp4",
+      "category": "videos",
+      "scope": "public",
+      "route": "https://myaelmendez.github.io/teo-1-corpus-916.mp4",
+      "type": "video",
+      "verified": true,
+      "evidence": {
+        "check": "http 200 on the canonical route",
+        "url": "https://myaelmendez.github.io/teo-1-corpus-916.mp4",
+        "sha256": "d38425b7b9b7955a8d968522344049d97759d41eb9ff1e56f651164168aff1c0",
+        "at": "2026-10-12"
+      },
+      "series": "teo",
+      "series_brand": "teologia.ai",
+      "episode": "1-corpus",
+      "episode_title": "EL CORPUS"
+    },
+    {
+      "id": "videos-teo-2-plataforma",
+      "name": "teo-2-plataforma-916.mp4",
+      "path": "teo-2-plataforma-916.mp4",
+      "category": "videos",
+      "scope": "public",
+      "route": "https://myaelmendez.github.io/teo-2-plataforma-916.mp4",
+      "type": "video",
+      "verified": true,
+      "evidence": {
+        "check": "http 200 on the canonical route",
+        "url": "https://myaelmendez.github.io/teo-2-plataforma-916.mp4",
+        "sha256": "2f98acce1b2c2595b46b1cab7db9ab53e57b5a3c023ce59afd7d1f872171896b",
+        "at": "2026-10-12"
+      },
+      "series": "teo",
+      "series_brand": "teologia.ai",
+      "episode": "2-plataforma",
+      "episode_title": "CERO SERVIDORES"
+    },
+    {
+      "id": "videos-teo-3-ensenar",
+      "name": "teo-3-ensenar-916.mp4",
+      "path": "teo-3-ensenar-916.mp4",
+      "category": "videos",
+      "scope": "public",
+      "route": "https://myaelmendez.github.io/teo-3-ensenar-916.mp4",
+      "type": "video",
+      "verified": true,
+      "evidence": {
+        "check": "http 200 on the canonical route",
+        "url": "https://myaelmendez.github.io/teo-3-ensenar-916.mp4",
+        "sha256": "3406b7c728198621aec266a24f6ac5a6a558d8d600414cd0272aadecda27a2c1",
+        "at": "2026-10-12"
+      },
+      "series": "teo",
+      "series_brand": "teologia.ai",
+      "episode": "3-ensenar",
+      "episode_title": "ENSEÑARLES TEMPRANO"
     }
   ]
 }

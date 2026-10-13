@@ -31,6 +31,10 @@ class Resource:
     type: str
     verified: bool = False
     evidence: str | None = None
+    series: str | None = None
+    series_brand: str | None = None
+    episode: int | None = None
+    episode_title: str | None = None
 
     def to_dict(self) -> dict:
         return asdict(self)
