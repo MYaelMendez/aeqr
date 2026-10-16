@@ -1,7 +1,8 @@
+from pathlib import Path
 import json
 from ae import envelope, mech, dispatch, authority as auth
 
-SPEC = "C:/æ/hermes-fork/mech/qr_index.mec"
+SPEC = Path(__file__).parent / "fixtures" / "qr_index.mec"
 
 
 def test_parse_qr_index_pipeline():

@@ -1,0 +1,16 @@
+# Portable test declaration for the existing QR dispatch contract.
+qr_index(payload) := ⇒
+  ├ :Scan(payload)
+  ├ :Decode(payload)
+  ├ :Verify(payload)
+  ├ :Resolve(payload)
+  └ :Retrieve(payload)
+
+:Scan(payload) → :Decode(payload)
+:Decode(payload) → :Verify(payload)
+:Verify(payload)
+  ├ valid → :Resolve(payload)
+  └ invalid → :Refused(payload)
+:Resolve(payload) → :Retrieve(payload)
+:Retrieve(payload) ⇒ artifact
+:Refused(payload) ⇒ refusal

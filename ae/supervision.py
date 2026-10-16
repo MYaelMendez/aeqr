@@ -929,8 +929,9 @@ def selftest() -> int:
     print(f"    all types: {ok_all}")
 
     print("\n" + "=" * 62)
-    print("RESULT: supervisor is deterministic and refuses the silent failure class")
-    return 0
+    passed = not rep.passed and not rep2.passed and ok_all
+    print("RESULT: " + ("PASS" if passed else "FAIL"))
+    return 0 if passed else 1
 
 
 # ── CLI ───────────────────────────────────────────────────────────────────────

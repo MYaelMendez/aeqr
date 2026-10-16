@@ -1,3 +1,4 @@
+from pathlib import Path
 import hashlib
 from ae import envelope, dispatch, gpu_batch
 
@@ -30,7 +31,7 @@ def test_empty_batch():
 
 
 def test_dispatch_uses_gpu_when_available():
-    spec = "C:/æ/hermes-fork/mech/qr_index.mec"
+    spec = Path(__file__).parent / "fixtures" / "qr_index.mec"
     rec = dispatch.fleet_dispatch(spec, dispatch.demo_units(8), workers=8, gpu=True)
     assert rec.sealed is True
     # engine records the truth; on this host the RTX 3050 kernel compiles
@@ -39,7 +40,7 @@ def test_dispatch_uses_gpu_when_available():
 
 
 def test_dispatch_cpu_and_gpu_agree_on_the_seal():
-    spec = "C:/æ/hermes-fork/mech/qr_index.mec"
+    spec = Path(__file__).parent / "fixtures" / "qr_index.mec"
     a = dispatch.fleet_dispatch(spec, dispatch.demo_units(8), gpu=False)
     b = dispatch.fleet_dispatch(spec, dispatch.demo_units(8), gpu=True)
     # the engine is an implementation detail — the receipt seal must not depend on it
@@ -59,7 +60,7 @@ def test_units_from_registry_are_real_and_verifiable():
 
 
 def test_dispatch_over_registry_inventory():
-    spec = "C:/æ/hermes-fork/mech/qr_index.mec"
+    spec = Path(__file__).parent / "fixtures" / "qr_index.mec"
     units = dispatch.units_from_registry(limit=24)
     rec = dispatch.fleet_dispatch(spec, units, workers=8)
     assert rec.units == 24

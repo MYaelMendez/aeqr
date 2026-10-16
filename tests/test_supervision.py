@@ -46,3 +46,26 @@ def test_two_real_decoders_agree(tmp_path):
     r = s.produce("manifest", {"surfaces": ["a", "b"]}, out_path=tmp_path / "m.png")
     rep = s.supervise(tmp_path / "m.png", expect_kind="manifest", envelope=r.envelope)
     assert set(rep.decoders_ok) == {"cv2", "pyzbar"}
+
+
+@pytest.mark.parametrize("refusals,fail_kind,expected", [
+    ([False, False], None, 0),
+    ([True, False], None, 1),
+    ([False, True], None, 1),
+    ([False, False], "manifest", 1),
+])
+def test_selftest_exit_status_matches_observed_gates(monkeypatch, refusals, fail_kind, expected):
+    from types import SimpleNamespace
+    from ae import envelope
+
+    def produce(kind, payload, **kwargs):
+        if kind == fail_kind:
+            raise s.QRRefused("synthetic refusal", s.QRReport(passed=False))
+        return SimpleNamespace(envelope=envelope.encode(kind, payload), render=lambda: "synthetic receipt")
+
+    reports = iter(refusals)
+    monkeypatch.setattr(s, "produce", produce)
+    monkeypatch.setattr(s, "_render", lambda *args, **kwargs: None)
+    monkeypatch.setattr(s, "supervise", lambda *args, **kwargs: SimpleNamespace(
+        passed=next(reports), reason=lambda: "synthetic observation"))
+    assert s.selftest() == expected
